@@ -13,4 +13,4 @@
 4주차: 최종 침투 및 플래그 탈취
 
 
-5주차: sql injecton 조사
+5주차: dirty page 조사
